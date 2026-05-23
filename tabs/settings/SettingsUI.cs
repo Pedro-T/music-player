@@ -2,16 +2,14 @@ using Godot;
 using System;
 using System.IO;
 
-public partial class Settings : VBoxContainer
+public partial class SettingsUI : VBoxContainer
 {
-    public string TrackDirectoryPath {get; private set;} = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
-
     public override void _Ready()
     {
         Label trackDirectoryLabel = GetNode<Label>("TrackDirContainer/TrackDirPathLabel");
         Button browseButton = GetNode<Button>("TrackDirContainer/BrowseButton");
 
-        trackDirectoryLabel.Text = TrackDirectoryPath;
+        trackDirectoryLabel.Text = Settings.Instance.TrackDirectoryPath;
 
         browseButton.Pressed += () =>
         {
@@ -22,8 +20,9 @@ public partial class Settings : VBoxContainer
             fileDialog.PopupCentered();
             fileDialog.DirSelected += (string path) =>
             {
-                TrackDirectoryPath = path;
-                trackDirectoryLabel.Text = TrackDirectoryPath;
+                Settings.Instance.TrackDirectoryPath = path;
+                RemoveChild(fileDialog); // Free the FileDialog after setting 
+                trackDirectoryLabel.Text = path;
             };
 
             fileDialog.Canceled += () => fileDialog.QueueFree();
@@ -31,3 +30,6 @@ public partial class Settings : VBoxContainer
     }
 
 }
+
+
+

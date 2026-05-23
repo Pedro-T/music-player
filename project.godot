@@ -17,6 +17,10 @@ run/low_processor_mode=true
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
+[autoload]
+
+Settings="*uid://cbuawv64vy67"
+
 [display]
 
 window/size/viewport_width=600

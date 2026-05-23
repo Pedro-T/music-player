@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bpprtv5moshnq"]
 
-[ext_resource type="Script" uid="uid://dj2tl6afikyq8" path="res://tabs/settings/Settings.cs" id="1_i27o3"]
+[ext_resource type="Script" uid="uid://dj2tl6afikyq8" path="res://tabs/settings/SettingsUI.cs" id="1_i27o3"]
 
-[node name="Settings" type="VBoxContainer" unique_id=1264887619]
+[node name="SettingsUI" type="VBoxContainer" unique_id=1264887619]
 offset_right = 592.0
 offset_bottom = 648.0
 size_flags_horizontal = 3

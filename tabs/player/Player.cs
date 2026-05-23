@@ -15,7 +15,7 @@ public partial class Player : GridContainer
     private ProgressDisplay progressDisplay;
     private HSlider volumeSlider;
 
-    private static readonly string homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
+    private string trackDirectoryPath = "";
 
     private bool isShuffle = false;
     private readonly Random random = new Random();
@@ -37,7 +37,9 @@ public partial class Player : GridContainer
         progressDisplay = GetNode<ProgressDisplay>("ProgressDisplay");
         volumeSlider = GetNode<HSlider>("PlayerControlsContainer/VolumeSlider");
 
-        playlist.Size = new Vector2(500, 400);
+        GD.Print("load player");
+        trackDirectoryPath = Settings.Instance.TrackDirectoryPath;
+        Settings.Instance.TrackDirectoryPathChanged += OnTrackDirectoryPathChanged;
         populatePlaylistFromFile();
 
         playlist.ItemSelected += OnPlaylistItemSelected;
@@ -58,12 +60,34 @@ public partial class Player : GridContainer
     private void populatePlaylistFromFile()
     {
         playlist.Clear();
-        FileInfo[] files = new DirectoryInfo(homePath).GetFiles();
+        playlistTracks.Clear();
+
+        if (!Directory.Exists(trackDirectoryPath))
+        {
+            GD.PrintErr($"Track directory does not exist: {trackDirectoryPath}");
+            return;
+        }
+
+        FileInfo[] files = new DirectoryInfo(trackDirectoryPath).GetFiles();
         foreach (FileInfo file in files)
         {
             playlist.AddItem(file.Name);
             playlistTracks.Add(file.Name);
         }
+    }
+
+    private void OnTrackDirectoryPathChanged(string newPath)
+    {
+        trackDirectoryPath = newPath;
+        ReloadPlaylist();
+    }
+
+    private void ReloadPlaylist()
+    {
+        selectedTrackName = string.Empty;
+        playingTrack = string.Empty;
+        audioPlayer.Stop();
+        populatePlaylistFromFile();
     }
 
     private void OnPlaylistItemSelected(long index)
@@ -172,12 +196,12 @@ public partial class Player : GridContainer
         switch (fileExtension)
         {
             case ".mp3":
-                byte[] bytes = File.ReadAllBytes(Path.Combine(homePath, trackName));
+                byte[] bytes = File.ReadAllBytes(Path.Combine(trackDirectoryPath, trackName));
                 stream = new AudioStreamMP3();
                 ((AudioStreamMP3)stream).Data = bytes;
                 break;
             case ".ogg":
-                stream = AudioStreamOggVorbis.LoadFromFile(Path.Combine(homePath, trackName));
+                stream = AudioStreamOggVorbis.LoadFromFile(Path.Combine(trackDirectoryPath, trackName));
                 break;
             default:
                 GD.PrintErr("Unsupported file format: " + fileExtension);
