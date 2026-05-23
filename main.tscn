@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bks5cpq6y0nr"]
+
+[ext_resource type="Script" uid="uid://br74fpffswhir" path="res://Main.cs" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://doomjbhw07tvr" path="res://tabs/player.tscn" id="2_0xm2m"]
+
+[node name="main" type="Node" unique_id=1349322507]
+script = ExtResource("1_ig7tw")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1118350318]
+
+[node name="ColorRect" type="ColorRect" parent="Node2D" unique_id=637427839]
+offset_right = 1151.0
+offset_bottom = 649.0
+color = Color(0, 0, 0, 1)
+
+[node name="TabContainer" type="TabContainer" parent="Node2D" unique_id=617522138]
+offset_right = 1152.0
+offset_bottom = 648.0
+current_tab = 1
+
+[node name="Player" parent="Node2D/TabContainer" unique_id=992688228 instance=ExtResource("2_0xm2m")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Playlists" type="GridContainer" parent="Node2D/TabContainer" unique_id=1382659035]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Settings" type="GridContainer" parent="Node2D/TabContainer" unique_id=237852079]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Download" type="GridContainer" parent="Node2D/TabContainer" unique_id=1003227360]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
