@@ -5,6 +5,8 @@ public partial class ProgressDisplay : HBoxContainer
 {
     private Label currentTimeLabel;
     private Label totalDurationLabel;
+
+    private ProgressBar progressBar;
     private AudioStreamPlayer audioPlayer;
 
     private Timer timer;
@@ -12,6 +14,8 @@ public partial class ProgressDisplay : HBoxContainer
     {
         currentTimeLabel = GetNode<Label>("CurrentTimeLabel");
         totalDurationLabel = GetNode<Label>("TrackLengthLabel");
+        progressBar = GetNode<ProgressBar>("TrackProgressBar");
+
         timer = GetNode<Timer>("ProgressUpdateTimer");
         timer.Connect("timeout", Callable.From(() => UpdateProgress()));
         timer.Start();
@@ -28,7 +32,11 @@ public partial class ProgressDisplay : HBoxContainer
         {
             return;
         }
-        currentTimeLabel.Text = TimeSpan.FromSeconds(audioPlayer.GetPlaybackPosition()).ToString(@"mm\:ss");
-        totalDurationLabel.Text = TimeSpan.FromSeconds(audioPlayer.Stream.GetLength()).ToString(@"mm\:ss");
+        TimeSpan currentTime = TimeSpan.FromSeconds(audioPlayer.GetPlaybackPosition());
+        TimeSpan totalDuration = TimeSpan.FromSeconds(audioPlayer.Stream.GetLength());
+        currentTimeLabel.Text = currentTime.ToString(@"mm\:ss");
+        totalDurationLabel.Text = totalDuration.ToString(@"mm\:ss");
+        float progress = (float)currentTime.TotalSeconds / (float)totalDuration.TotalSeconds;
+        progressBar.Value = progress;
     }
 }
