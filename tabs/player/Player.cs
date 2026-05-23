@@ -167,11 +167,30 @@ public partial class Player : GridContainer
 
     private void loadTrack(String trackName)
     {
-        byte[] bytes = File.ReadAllBytes(Path.Combine(homePath, trackName));
-        AudioStreamMP3 mp3 = new AudioStreamMP3();
-        mp3.Data = bytes;
+        
+        string fileExtension = Path.GetExtension(trackName).ToLower();
+        AudioStream stream = null;
+        switch (fileExtension)
+        {
+            case ".mp3":
+                byte[] bytes = File.ReadAllBytes(Path.Combine(homePath, trackName));
+                stream = new AudioStreamMP3();
+                ((AudioStreamMP3)stream).Data = bytes;
+                break;
+            case ".ogg":
+                stream = AudioStreamOggVorbis.LoadFromFile(Path.Combine(homePath, trackName));
+                break;
+            default:
+                GD.PrintErr("Unsupported file format: " + fileExtension);
+                return;
+        }
 
-        audioPlayer.Stream = mp3;
+        if (stream == null)
+        {
+            return;
+        }
+        
+        audioPlayer.Stream = stream;
         updateTrackPlayer(trackName);
         playingTrack = trackName;
 
