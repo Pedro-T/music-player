@@ -10,10 +10,11 @@ I want a simple music player that integrates youtube-dlp for adding to the libra
 - Youtube-DLP integration for downloads
 
 ## MVP1 Plan
-- Able to play tracks
-- Volume control
-- Pause / Play / Next / Previous controls
-- auto move to next track (shuffle only) based on a target music directory
+- Able to play tracks (done)
+- Volume control (done)
+- Pause / Play / Next / Previous controls (done)
+- Shuffle functionality (done)
+- Support for .mp3 (done) and .ogg (todo)
 
 ## MVP2 Plan
 - playlist editing
