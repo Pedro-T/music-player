@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://doomjbhw07tvr"]
+
+[ext_resource type="Script" uid="uid://dqmm2aur5p33h" path="res://tabs/player/Player.cs" id="1_bl5lo"]
+
+[node name="Player" type="GridContainer" unique_id=1427546198]
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_bl5lo")
+
+[node name="Playlist" type="ItemList" parent="." unique_id=1835096490]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+item_count = 1
+fixed_column_width = 500
+
+[node name="PlayerControlsContainer" type="HBoxContainer" parent="." unique_id=716552418]
+layout_mode = 2
+
+[node name="PrevButton" type="Button" parent="PlayerControlsContainer" unique_id=1829273568]
+layout_mode = 2
+text = "Previous"
+
+[node name="PlayButton" type="Button" parent="PlayerControlsContainer" unique_id=1108174074]
+layout_mode = 2
+text = "Play"
+
+[node name="NextButton" type="Button" parent="PlayerControlsContainer" unique_id=1687783743]
+layout_mode = 2
+text = "Next"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1499051411]
