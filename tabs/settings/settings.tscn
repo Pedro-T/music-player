@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bpprtv5moshnq"]
+
+[ext_resource type="Script" uid="uid://dj2tl6afikyq8" path="res://tabs/settings/Settings.cs" id="1_i27o3"]
+
+[node name="Settings" type="VBoxContainer" unique_id=1264887619]
+offset_right = 592.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_i27o3")
+metadata/_tab_index = 2
+
+[node name="TitleLabel" type="Label" parent="." unique_id=663835083]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="TrackDirContainer" type="HBoxContainer" parent="." unique_id=1159756087]
+layout_mode = 2
+
+[node name="TrackDirLabel" type="Label" parent="TrackDirContainer" unique_id=1471870520]
+layout_mode = 2
+text = "Track Directory:"
+
+[node name="TrackDirPathLabel" type="Label" parent="TrackDirContainer" unique_id=2131471480]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrowseButton" type="Button" parent="TrackDirContainer" unique_id=173973902]
+layout_mode = 2
+text = "Change"
