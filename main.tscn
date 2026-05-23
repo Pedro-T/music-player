@@ -9,12 +9,12 @@ script = ExtResource("1_ig7tw")
 [node name="Node2D" type="Node2D" parent="." unique_id=1118350318]
 
 [node name="ColorRect" type="ColorRect" parent="Node2D" unique_id=637427839]
-offset_right = 1151.0
-offset_bottom = 649.0
+offset_right = 600.0
+offset_bottom = 648.0
 color = Color(0, 0, 0, 1)
 
 [node name="TabContainer" type="TabContainer" parent="Node2D" unique_id=617522138]
-offset_right = 1152.0
+offset_right = 600.0
 offset_bottom = 648.0
 current_tab = 0
 

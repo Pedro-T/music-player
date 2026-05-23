@@ -4,25 +4,30 @@
 [ext_resource type="PackedScene" uid="uid://cuxn15vqdvgtq" path="res://tabs/player/progress_display.tscn" id="2_4nchr"]
 
 [node name="Player" type="GridContainer" unique_id=1427546198]
-offset_right = 1152.0
+offset_right = 600.0
 offset_bottom = 648.0
 script = ExtResource("1_bl5lo")
 
 [node name="Playlist" type="ItemList" parent="." unique_id=1835096490]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+size_flags_horizontal = 3
 fixed_column_width = 500
 
 [node name="PlayingTrackLabel" type="Label" parent="." unique_id=1696538022]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Playing: Nothing!"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ProgressDisplay" parent="." unique_id=1194056953 instance=ExtResource("2_4nchr")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 
 [node name="PlayerControlsContainer" type="HBoxContainer" parent="." unique_id=716552418]
 layout_mode = 2
+size_flags_horizontal = 6
 
 [node name="PrevButton" type="Button" parent="PlayerControlsContainer" unique_id=1829273568]
 layout_mode = 2
