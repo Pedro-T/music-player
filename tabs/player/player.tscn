@@ -36,4 +36,8 @@ text = "Play"
 layout_mode = 2
 text = "Next"
 
+[node name="ShuffleButton" type="CheckButton" parent="PlayerControlsContainer" unique_id=736330134]
+layout_mode = 2
+text = "Shuffle"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1499051411]

@@ -11,14 +11,17 @@ public partial class Player : GridContainer
     private Button playButton;
     private Button nextButton;
     private Button prevButton;
+    private Button shuffleButton;
     private Label playingTrackLabel;
     private ProgressDisplay progressDisplay;
 
     private static readonly string homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
 
     private bool isShuffle = false;
+    private readonly Random random = new Random();
 
     private List<string> playlistTracks = new List<string>();
+    private List<string> shuffleQueue = new List<string>();
     private string selectedTrackName = "";
     private string playingTrack = "";
 
@@ -29,6 +32,7 @@ public partial class Player : GridContainer
         playButton = GetNode<Button>("PlayerControlsContainer/PlayButton");
         nextButton = GetNode<Button>("PlayerControlsContainer/NextButton");
         prevButton = GetNode<Button>("PlayerControlsContainer/PrevButton");
+        shuffleButton = GetNode<Button>("PlayerControlsContainer/ShuffleButton");
         playingTrackLabel = GetNode<Label>("PlayingTrackLabel");
         progressDisplay = GetNode<ProgressDisplay>("ProgressDisplay");
 
@@ -39,6 +43,7 @@ public partial class Player : GridContainer
         playButton.Pressed += OnPlayPressed;
         nextButton.Pressed += OnNextPressed;
         prevButton.Pressed += OnPrevPressed;
+        shuffleButton.Toggled += OnShuffleToggled;
 
         audioPlayer.Finished += playNext;
         progressDisplay.Setup(audioPlayer);
@@ -103,16 +108,52 @@ public partial class Player : GridContainer
         audioPlayer.StreamPaused = false;
     }
 
+    private void OnShuffleToggled(bool toggledOn)
+    {
+        isShuffle = toggledOn;
+        if (isShuffle)
+        {
+            InitializeShuffleQueue();
+        }
+    }
+
+    private void InitializeShuffleQueue()
+    {
+        shuffleQueue = new List<string>(playlistTracks);
+    }
+
     private void playNext()
     {
-        int currentIndex = playlistTracks.IndexOf(playingTrack);
-        if (currentIndex == playlistTracks.Count - 1)
+        if (playlistTracks.Count == 0)
         {
-            loadTrack(playlistTracks[0]);
+            return;
+        }
+
+        if (isShuffle)
+        {
+            // Reset shuffle queue if empty (all tracks have been played)
+            if (shuffleQueue.Count == 0)
+            {
+                InitializeShuffleQueue();
+            }
+
+            // Pick a random track from remaining tracks
+            int randomIndex = random.Next(shuffleQueue.Count);
+            string nextTrack = shuffleQueue[randomIndex];
+            shuffleQueue.RemoveAt(randomIndex);
+            loadTrack(nextTrack);
         }
         else
         {
-            loadTrack(playlistTracks[currentIndex + 1]);
+            int currentIndex = playlistTracks.IndexOf(playingTrack);
+            if (currentIndex == playlistTracks.Count - 1)
+            {
+                loadTrack(playlistTracks[0]);
+            }
+            else
+            {
+                loadTrack(playlistTracks[currentIndex + 1]);
+            }
         }
         audioPlayer.Play();
         playButton.Text = "Stop";
@@ -127,6 +168,12 @@ public partial class Player : GridContainer
         audioPlayer.Stream = mp3;
         updateTrackPlayer(trackName);
         playingTrack = trackName;
+
+        // Remove track from shuffle queue if shuffle is enabled
+        if (isShuffle)
+        {
+            shuffleQueue.Remove(trackName);
+        }
     }
 
     private void updateTrackPlayer(String trackName)
