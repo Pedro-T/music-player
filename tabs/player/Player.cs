@@ -12,13 +12,13 @@ public partial class Player : GridContainer
     private Button nextButton;
     private Button prevButton;
 
-    private static readonly String homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
+    private static readonly string homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
 
-    private Boolean isShuffle = false;
+    private bool isShuffle = false;
 
-    private List<String> playlistTracks = new List<String>();
-    private String selectedTrackName = "";
-    private String playingTrack = "";
+    private List<string> playlistTracks = new List<string>();
+    private string selectedTrackName = "";
+    private string playingTrack = "";
 
     public override void _Ready()
     {
