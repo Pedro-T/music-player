@@ -14,6 +14,7 @@ public partial class Player : GridContainer
     private Button shuffleButton;
     private Label playingTrackLabel;
     private ProgressDisplay progressDisplay;
+    private HSlider volumeSlider;
 
     private static readonly string homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
 
@@ -35,6 +36,7 @@ public partial class Player : GridContainer
         shuffleButton = GetNode<Button>("PlayerControlsContainer/ShuffleButton");
         playingTrackLabel = GetNode<Label>("PlayingTrackLabel");
         progressDisplay = GetNode<ProgressDisplay>("ProgressDisplay");
+        volumeSlider = GetNode<HSlider>("PlayerControlsContainer/VolumeSlider");
 
         playlist.Size = new Vector2(500, 400);
         populatePlaylistFromFile();
@@ -44,9 +46,13 @@ public partial class Player : GridContainer
         nextButton.Pressed += OnNextPressed;
         prevButton.Pressed += OnPrevPressed;
         shuffleButton.Toggled += OnShuffleToggled;
+        volumeSlider.ValueChanged += OnVolumeChanged;
 
         audioPlayer.Finished += playNext;
         progressDisplay.Setup(audioPlayer);
+
+        // Set initial volume to 50%
+        SetVolume(50);
     }
 
 
@@ -179,5 +185,17 @@ public partial class Player : GridContainer
     private void updateTrackPlayer(String trackName)
     {
         playingTrackLabel.Text = "Playing: " + trackName;
+    }
+
+    private void OnVolumeChanged(double value)
+    {
+        SetVolume((float)value);
+    }
+
+    private void SetVolume(float percentage)
+    {
+        // Convert percentage (0-100) to linear (0-1) then to decibels
+        float linearVolume = percentage / 100f;
+        audioPlayer.VolumeDb = Mathf.LinearToDb(linearVolume);
     }
 }

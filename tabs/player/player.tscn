@@ -29,6 +29,10 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 
+[node name="ShuffleButton" type="CheckButton" parent="PlayerControlsContainer" unique_id=736330134]
+layout_mode = 2
+text = "Shuffle"
+
 [node name="PrevButton" type="Button" parent="PlayerControlsContainer" unique_id=1829273568]
 layout_mode = 2
 text = "Previous"
@@ -41,8 +45,10 @@ text = "Play"
 layout_mode = 2
 text = "Next"
 
-[node name="ShuffleButton" type="CheckButton" parent="PlayerControlsContainer" unique_id=736330134]
+[node name="VolumeSlider" type="HSlider" parent="PlayerControlsContainer" unique_id=848174812]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "Shuffle"
+size_flags_vertical = 4
+value = 50.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1499051411]
