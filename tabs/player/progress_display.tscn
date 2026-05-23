@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cuxn15vqdvgtq"]
+
+[ext_resource type="Script" uid="uid://mteavt3hnb6j" path="res://tabs/player/ProgressDisplay.cs" id="1_6ey3n"]
+
+[node name="ProgressDisplay" type="HBoxContainer" unique_id=1194056953]
+custom_minimum_size = Vector2(500, 0)
+script = ExtResource("1_6ey3n")
+
+[node name="CurrentTimeLabel" type="Label" parent="." unique_id=449180996]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="TrackProgressBar" type="ProgressBar" parent="." unique_id=1698489652]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TrackLengthLabel" type="Label" parent="." unique_id=966823185]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="ProgressUpdateTimer" type="Timer" parent="." unique_id=1789044165]
+wait_time = 0.5

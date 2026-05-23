@@ -11,6 +11,8 @@ public partial class Player : GridContainer
     private Button playButton;
     private Button nextButton;
     private Button prevButton;
+    private Label playingTrackLabel;
+    private ProgressDisplay progressDisplay;
 
     private static readonly string homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
 
@@ -27,6 +29,9 @@ public partial class Player : GridContainer
         playButton = GetNode<Button>("PlayerControlsContainer/PlayButton");
         nextButton = GetNode<Button>("PlayerControlsContainer/NextButton");
         prevButton = GetNode<Button>("PlayerControlsContainer/PrevButton");
+        playingTrackLabel = GetNode<Label>("PlayingTrackLabel");
+        progressDisplay = GetNode<ProgressDisplay>("ProgressDisplay");
+
         playlist.Size = new Vector2(500, 400);
         populatePlaylistFromFile();
 
@@ -36,6 +41,7 @@ public partial class Player : GridContainer
         prevButton.Pressed += OnPrevPressed;
 
         audioPlayer.Finished += playNext;
+        progressDisplay.Setup(audioPlayer);
     }
 
 
@@ -119,6 +125,12 @@ public partial class Player : GridContainer
         mp3.Data = bytes;
 
         audioPlayer.Stream = mp3;
+        updateTrackPlayer(trackName);
         playingTrack = trackName;
+    }
+
+    private void updateTrackPlayer(String trackName)
+    {
+        playingTrackLabel.Text = "Playing: " + trackName;
     }
 }

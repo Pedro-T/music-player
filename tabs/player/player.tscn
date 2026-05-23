@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://doomjbhw07tvr"]
 
 [ext_resource type="Script" uid="uid://dqmm2aur5p33h" path="res://tabs/player/Player.cs" id="1_bl5lo"]
+[ext_resource type="PackedScene" uid="uid://cuxn15vqdvgtq" path="res://tabs/player/progress_display.tscn" id="2_4nchr"]
 
 [node name="Player" type="GridContainer" unique_id=1427546198]
 offset_right = 1152.0
@@ -11,6 +12,14 @@ script = ExtResource("1_bl5lo")
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 fixed_column_width = 500
+
+[node name="PlayingTrackLabel" type="Label" parent="." unique_id=1696538022]
+layout_mode = 2
+text = "Playing: Nothing!"
+horizontal_alignment = 1
+
+[node name="ProgressDisplay" parent="." unique_id=1194056953 instance=ExtResource("2_4nchr")]
+layout_mode = 2
 
 [node name="PlayerControlsContainer" type="HBoxContainer" parent="." unique_id=716552418]
 layout_mode = 2
