@@ -10,7 +10,6 @@ script = ExtResource("1_bl5lo")
 [node name="Playlist" type="ItemList" parent="." unique_id=1835096490]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
-item_count = 1
 fixed_column_width = 500
 
 [node name="PlayerControlsContainer" type="HBoxContainer" parent="." unique_id=716552418]

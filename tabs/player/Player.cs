@@ -13,6 +13,8 @@ public partial class Player : GridContainer
     private Button prevButton;
 
     private static readonly String homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
+
+    private List<String> playlistTracks = new List<String>();
     private String selectedTrackName = "";
     private String playingTrack = "";
 
@@ -28,6 +30,10 @@ public partial class Player : GridContainer
 
         playlist.ItemSelected += OnPlaylistItemSelected;
         playButton.Pressed += OnPlayPressed;
+        nextButton.Pressed += OnNextPressed;
+        //prevButton.Pressed += OnPrevPressed;
+
+        audioPlayer.Finished += playNext;
     }
 
 
@@ -38,12 +44,18 @@ public partial class Player : GridContainer
         foreach (FileInfo file in files)
         {
             playlist.AddItem(file.Name);
+            playlistTracks.Add(file.Name);
         }
     }
 
     private void OnPlaylistItemSelected(long index)
     {
         selectedTrackName = playlist.GetItemText((int)index);
+    }
+
+    private void OnNextPressed()
+    {
+        playNext();
     }
 
     private void OnPlayPressed()
@@ -66,6 +78,22 @@ public partial class Player : GridContainer
         }
         playButton.Text = "Stop";
         audioPlayer.StreamPaused = false;
+    }
+
+    private void playNext()
+    {
+        int currentIndex = playlistTracks.IndexOf(playingTrack);
+        GD.Print(currentIndex);
+        if (currentIndex == playlistTracks.Count - 1)
+        {
+            loadTrack(playlistTracks[0]);
+        }
+        else
+        {
+            loadTrack(playlistTracks[currentIndex + 1]);
+        }
+        audioPlayer.Play();
+        playButton.Text = "Stop";
     }
 
     private void loadTrack(String trackName)
