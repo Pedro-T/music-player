@@ -30,7 +30,6 @@ public partial class Settings : Node
     public override void _Ready()
     {
         Instance = this;
-        GD.Print("load settings");
         LoadSettings();
     }
 
