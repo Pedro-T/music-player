@@ -19,10 +19,9 @@ color = Color(0, 0, 0, 1)
 [node name="TabContainer" type="TabContainer" parent="Node2D" unique_id=617522138]
 offset_right = 600.0
 offset_bottom = 648.0
-current_tab = 2
+current_tab = 0
 
 [node name="Player" parent="Node2D/TabContainer" unique_id=992688228 instance=ExtResource("2_0xm2m")]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -32,6 +31,7 @@ layout_mode = 2
 metadata/_tab_index = 1
 
 [node name="Settings" parent="Node2D/TabContainer" unique_id=375212307 instance=ExtResource("3_h2yge")]
+visible = false
 layout_mode = 2
 
 [node name="Download" type="GridContainer" parent="Node2D/TabContainer" unique_id=1003227360]

@@ -4,9 +4,8 @@ using System.IO;
 
 public partial class Settings : Node
 {
-    private static readonly string SettingsFilePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Settings.cfg");
-    private static readonly string DefaultTrackDirectoryPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
 
+    private static readonly string DefaultTrackDirectoryPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
 
     private string _trackDirectoryPath;
     public string TrackDirectoryPath {
@@ -35,18 +34,17 @@ public partial class Settings : Node
 
     private void LoadSettings()
     {
-        if (File.Exists(SettingsFilePath))
+        if (Godot.FileAccess.FileExists("user://settings.cfg"))
         {
-            if (configFile.Load(SettingsFilePath) == Error.Ok)
+            if (configFile.Load("user://settings.cfg") == Error.Ok)
             {
                 _trackDirectoryPath = (string)configFile.GetValue("Settings", "TrackDirectoryPath", DefaultTrackDirectoryPath);
-                GD.Print(_trackDirectoryPath);
             }
         }
         else
         {
             configFile.SetValue("Settings", "TrackDirectoryPath", DefaultTrackDirectoryPath);
-            configFile.Save(SettingsFilePath);
+            configFile.Save("user://settings.cfg");
             LoadSettings(); // Reload to ensure the values are correctly set
         }
         
@@ -55,6 +53,6 @@ public partial class Settings : Node
     public void SaveSettings()
     {
         configFile.SetValue("Settings", "TrackDirectoryPath", TrackDirectoryPath);
-        configFile.Save(SettingsFilePath);
+        configFile.Save("user://settings.cfg");
     }
 }

@@ -13,7 +13,6 @@ config_version=5
 config/name="music-player"
 run/main_scene="uid://bks5cpq6y0nr"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
-run/low_processor_mode=true
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 
