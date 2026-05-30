@@ -20,13 +20,66 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="TrackDirLabel" type="Label" parent="TrackDirContainer" unique_id=1471870520]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Track Directory:"
 
 [node name="TrackDirPathLabel" type="Label" parent="TrackDirContainer" unique_id=2131471480]
 layout_mode = 2
 size_flags_horizontal = 3
+clip_text = true
 
 [node name="BrowseButton" type="Button" parent="TrackDirContainer" unique_id=173973902]
+layout_mode = 2
+text = "Change"
+
+[node name="DLPContainer" type="HBoxContainer" parent="." unique_id=883223544]
+layout_mode = 2
+
+[node name="DLPLabel" type="Label" parent="DLPContainer" unique_id=1289653193]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "YT-DLP Path:"
+
+[node name="DLPPathLabel" type="Label" parent="DLPContainer" unique_id=79693139]
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="BrowseButton" type="Button" parent="DLPContainer" unique_id=1481334701]
+layout_mode = 2
+text = "Change"
+
+[node name="FFmpegContainer" type="HBoxContainer" parent="." unique_id=1538266809]
+layout_mode = 2
+
+[node name="FFmpegLabel" type="Label" parent="FFmpegContainer" unique_id=1451427670]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "FFmpeg Path:"
+
+[node name="FFmpegPathLabel" type="Label" parent="FFmpegContainer" unique_id=326965695]
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="BrowseButton" type="Button" parent="FFmpegContainer" unique_id=447621978]
+layout_mode = 2
+text = "Change"
+
+[node name="FFprobeContainer" type="HBoxContainer" parent="." unique_id=1638931462]
+layout_mode = 2
+
+[node name="FFprobeLabel" type="Label" parent="FFprobeContainer" unique_id=1205184759]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "FFprobe Path:"
+
+[node name="FFprobePathLabel" type="Label" parent="FFprobeContainer" unique_id=1055504995]
+layout_mode = 2
+size_flags_horizontal = 3
+clip_text = true
+
+[node name="BrowseButton" type="Button" parent="FFprobeContainer" unique_id=636048573]
 layout_mode = 2
 text = "Change"

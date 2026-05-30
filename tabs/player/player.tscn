@@ -20,6 +20,7 @@ size_flags_horizontal = 3
 text = "Playing: Nothing!"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 
 [node name="ProgressDisplay" parent="." unique_id=1194056953 instance=ExtResource("2_4nchr")]
 custom_minimum_size = Vector2(0, 0)

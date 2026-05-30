@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c64en76vx6pqo"]
+
+[ext_resource type="Script" uid="uid://bhpueodx3lyo5" path="res://tabs/download/Download.cs" id="1_sf2t1"]
+
+[node name="Download" type="VBoxContainer" unique_id=2114081072]
+script = ExtResource("1_sf2t1")
+metadata/_tab_index = 3
+
+[node name="Label" type="Label" parent="." unique_id=2014267769]
+layout_mode = 2
+text = "Enter Youtube URL"
+
+[node name="UrlField" type="LineEdit" parent="." unique_id=1192738445]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+placeholder_text = "enter URL"
+
+[node name="DownloadButton" type="Button" parent="." unique_id=1819115511]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Download"
+
+[node name="StatusLabel" type="Label" parent="." unique_id=-2131046472]
+custom_minimum_size = Vector2(500, 50)
+layout_mode = 2
+autowrap_mode = 3
