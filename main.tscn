@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://br74fpffswhir" path="res://Main.cs" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://doomjbhw07tvr" path="res://tabs/player/player.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bpprtv5moshnq" path="res://tabs/settings/settings.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://c64en76vx6pqo" path="res://tabs/download/download.tscn" id="4_1bvp3"]
 
 [node name="main" type="Node" unique_id=1349322507]
 script = ExtResource("1_ig7tw")
+
+[node name="Settings" type="Node" parent="." unique_id=774281308]
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1118350318]
 
@@ -16,9 +20,10 @@ color = Color(0, 0, 0, 1)
 [node name="TabContainer" type="TabContainer" parent="Node2D" unique_id=617522138]
 offset_right = 600.0
 offset_bottom = 648.0
-current_tab = 0
+current_tab = 2
 
 [node name="Player" parent="Node2D/TabContainer" unique_id=992688228 instance=ExtResource("2_0xm2m")]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -27,12 +32,9 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Settings" type="GridContainer" parent="Node2D/TabContainer" unique_id=237852079]
-visible = false
+[node name="Settings" parent="Node2D/TabContainer" unique_id=375212307 instance=ExtResource("3_h2yge")]
 layout_mode = 2
-metadata/_tab_index = 2
 
-[node name="Download" type="GridContainer" parent="Node2D/TabContainer" unique_id=1003227360]
+[node name="Download" parent="Node2D/TabContainer" unique_id=1323590688 instance=ExtResource("4_1bvp3")]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 3

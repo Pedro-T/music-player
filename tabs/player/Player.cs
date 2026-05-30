@@ -1,5 +1,4 @@
 using Godot;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +15,7 @@ public partial class Player : GridContainer
     private ProgressDisplay progressDisplay;
     private HSlider volumeSlider;
 
-    private static readonly string homePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic), "tracks");
+    private string trackDirectoryPath = "";
 
     private bool isShuffle = false;
     private readonly Random random = new Random();
@@ -38,8 +37,9 @@ public partial class Player : GridContainer
         progressDisplay = GetNode<ProgressDisplay>("ProgressDisplay");
         volumeSlider = GetNode<HSlider>("PlayerControlsContainer/VolumeSlider");
 
-        playlist.Size = new Vector2(500, 400);
-        populatePlaylistFromFile();
+        trackDirectoryPath = Settings.Instance.TrackDirectoryPath;
+        Settings.Instance.TrackDirectoryPathChanged += OnTrackDirectoryPathChanged;
+        PopulatePlaylistFromFile();
 
         playlist.ItemSelected += OnPlaylistItemSelected;
         playButton.Pressed += OnPlayPressed;
@@ -48,7 +48,7 @@ public partial class Player : GridContainer
         shuffleButton.Toggled += OnShuffleToggled;
         volumeSlider.ValueChanged += OnVolumeChanged;
 
-        audioPlayer.Finished += playNext;
+        audioPlayer.Finished += PlayNext;
         progressDisplay.Setup(audioPlayer);
 
         // Set initial volume to 50%
@@ -56,15 +56,37 @@ public partial class Player : GridContainer
     }
 
 
-    private void populatePlaylistFromFile()
+    private void PopulatePlaylistFromFile()
     {
         playlist.Clear();
-        FileInfo[] files = new DirectoryInfo(homePath).GetFiles();
+        playlistTracks.Clear();
+
+        if (!Directory.Exists(trackDirectoryPath))
+        {
+            GD.PrintErr($"Track directory does not exist: {trackDirectoryPath}");
+            return;
+        }
+
+        FileInfo[] files = new DirectoryInfo(trackDirectoryPath).GetFiles();
         foreach (FileInfo file in files)
         {
             playlist.AddItem(file.Name);
             playlistTracks.Add(file.Name);
         }
+    }
+
+    private void OnTrackDirectoryPathChanged(string newPath)
+    {
+        trackDirectoryPath = newPath;
+        ReloadPlaylist();
+    }
+
+    private void ReloadPlaylist()
+    {
+        selectedTrackName = string.Empty;
+        playingTrack = string.Empty;
+        audioPlayer.Stop();
+        PopulatePlaylistFromFile();
     }
 
     private void OnPlaylistItemSelected(long index)
@@ -77,11 +99,11 @@ public partial class Player : GridContainer
         int currentIndex = playlistTracks.IndexOf(playingTrack);
         if (currentIndex == 0)
         {
-            loadTrack(playlistTracks[playlistTracks.Count - 1]);
+            LoadTrack(playlistTracks[playlistTracks.Count - 1]);
         }
         else
         {
-            loadTrack(playlistTracks[currentIndex - 1]);
+            LoadTrack(playlistTracks[currentIndex - 1]);
         }
         audioPlayer.Play();
         playButton.Text = "Stop";
@@ -89,7 +111,7 @@ public partial class Player : GridContainer
 
     private void OnNextPressed()
     {
-        playNext();
+        PlayNext();
     }
 
     private void OnPlayPressed()
@@ -105,7 +127,7 @@ public partial class Player : GridContainer
             return;
         }
         if (playingTrack != selectedTrackName) { // not playing and different track selected
-            loadTrack(selectedTrackName);
+            LoadTrack(selectedTrackName);
             audioPlayer.Play();
             playButton.Text = "Stop";
             return;
@@ -128,7 +150,7 @@ public partial class Player : GridContainer
         shuffleQueue = new List<string>(playlistTracks);
     }
 
-    private void playNext()
+    private void PlayNext()
     {
         if (playlistTracks.Count == 0)
         {
@@ -147,25 +169,25 @@ public partial class Player : GridContainer
             int randomIndex = random.Next(shuffleQueue.Count);
             string nextTrack = shuffleQueue[randomIndex];
             shuffleQueue.RemoveAt(randomIndex);
-            loadTrack(nextTrack);
+            LoadTrack(nextTrack);
         }
         else
         {
             int currentIndex = playlistTracks.IndexOf(playingTrack);
             if (currentIndex == playlistTracks.Count - 1)
             {
-                loadTrack(playlistTracks[0]);
+                LoadTrack(playlistTracks[0]);
             }
             else
             {
-                loadTrack(playlistTracks[currentIndex + 1]);
+                LoadTrack(playlistTracks[currentIndex + 1]);
             }
         }
         audioPlayer.Play();
         playButton.Text = "Stop";
     }
 
-    private void loadTrack(String trackName)
+    private void LoadTrack(string trackName)
     {
         
         string fileExtension = Path.GetExtension(trackName).ToLower();
@@ -173,12 +195,12 @@ public partial class Player : GridContainer
         switch (fileExtension)
         {
             case ".mp3":
-                byte[] bytes = File.ReadAllBytes(Path.Combine(homePath, trackName));
+                byte[] bytes = File.ReadAllBytes(Path.Combine(trackDirectoryPath, trackName));
                 stream = new AudioStreamMP3();
                 ((AudioStreamMP3)stream).Data = bytes;
                 break;
             case ".ogg":
-                stream = AudioStreamOggVorbis.LoadFromFile(Path.Combine(homePath, trackName));
+                stream = AudioStreamOggVorbis.LoadFromFile(Path.Combine(trackDirectoryPath, trackName));
                 break;
             default:
                 GD.PrintErr("Unsupported file format: " + fileExtension);
@@ -191,7 +213,7 @@ public partial class Player : GridContainer
         }
         
         audioPlayer.Stream = stream;
-        updateTrackPlayer(trackName);
+        UpdateTrackPlayer(trackName);
         playingTrack = trackName;
 
         // Remove track from shuffle queue if shuffle is enabled
@@ -201,7 +223,7 @@ public partial class Player : GridContainer
         }
     }
 
-    private void updateTrackPlayer(String trackName)
+    private void UpdateTrackPlayer(string trackName)
     {
         playingTrackLabel.Text = "Playing: " + trackName;
     }
